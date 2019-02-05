@@ -73,7 +73,7 @@ public class DriveBase extends Subsystem {
         
         diffDrive = new DifferentialDrive(leftSpeedController, rightSpeedController);
         addChild("DiffDrive",diffDrive);
-        diffDrive.setSafetyEnabled(true);
+        diffDrive.setSafetyEnabled(false);
         diffDrive.setExpiration(0.1);
         diffDrive.setMaxOutput(0.5);
 
