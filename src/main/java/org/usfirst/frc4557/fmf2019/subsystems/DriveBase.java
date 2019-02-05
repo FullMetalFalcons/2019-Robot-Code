@@ -12,6 +12,7 @@
 package org.usfirst.frc4557.fmf2019.subsystems;
 
 
+import org.usfirst.frc4557.fmf2019.Robot;
 import org.usfirst.frc4557.fmf2019.commands.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -204,5 +205,47 @@ public class DriveBase extends Subsystem {
         ahrs.zeroYaw();
 
     }
+
+    public double getTalonRightSpeed() {
+        return rTalonSRX1.getSelectedSensorVelocity();
+        
+        
+    }
+
+    public double getTalonLeftSpeed(){
+        return lTalonSRX1.getSelectedSensorVelocity();
+    }
+
+    class PlotThread implements Runnable {
+        Robot robot;
+        
+
+		public PlotThread(Robot robot) {
+			this.robot = robot;
+		}
+
+		public void run() {
+
+			/**
+			 * Speed up network tables, this is a test project so eat up all of
+			 * the network possible for the purpose of this test.
+			 */
+
+			while (true) {
+				/* Yield for a Ms or so - this is not meant to be accurate */
+				try {
+					Thread.sleep(1);
+				} catch (Exception e) {
+					/* Do Nothing */
+				}
+
+				/* Grab the latest signal update from our 1ms frame update */
+				double velocityright = this.robot.driveBase.getTalonRightSpeed();
+                SmartDashboard.putNumber("vel right", velocityright);
+                double velocityleft = this.robot.driveBase.getTalonLeftSpeed();
+                SmartDashboard.putNumber("vel left", velocityleft);
+            }
+		}
+	}
 }
 
