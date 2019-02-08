@@ -85,7 +85,7 @@ public class DriveBase extends Subsystem {
         addChild("DiffDrive",diffDrive);
         diffDrive.setSafetyEnabled(false);
         diffDrive.setExpiration(0.1);
-        diffDrive.setMaxOutput(0.5);
+        diffDrive.setMaxOutput(1.0);
 
         
 
@@ -204,6 +204,12 @@ public class DriveBase extends Subsystem {
 
         ahrs.zeroYaw();
 
+    }
+
+    public void drive(double left, double right) {
+    
+        diffDrive.tankDrive(left, right);
+    
     }
 
     public double getTalonRightSpeed() {
