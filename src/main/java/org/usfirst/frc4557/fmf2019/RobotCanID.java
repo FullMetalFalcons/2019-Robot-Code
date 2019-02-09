@@ -10,5 +10,6 @@ package org.usfirst.frc4557.fmf2019;
 /**
  * Add your docs here.
  */
-public class RobotCanID {
+public final class RobotCanID {
+    public static final int COMPRESSORID = 0;
 }
