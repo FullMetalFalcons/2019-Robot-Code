@@ -7,6 +7,8 @@
 
 package org.usfirst.frc4557.fmf2019.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,6 +17,24 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Intake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+
+  DoubleSolenoid lift;
+  DoubleSolenoid wrist;
+  DoubleSolenoid shoot;
+
+  public Intake(){
+    lift = new DoubleSolenoid(11, 0, 1);
+ //   wrist = new DoubleSolenoid(moduleNumber, forwardChannel, reverseChannel);
+ //   shoot = new DoubleSolenoid(moduleNumber, forwardChannel, reverseChannel);
+  }
+
+  public void down(){
+    lift.set(Value.kForward);
+  }
+
+  public void up(){
+    lift.set(Value.kReverse);
+  }
 
   @Override
   public void initDefaultCommand() {

@@ -9,13 +9,43 @@ package org.usfirst.frc4557.fmf2019.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import java.util.concurrent.ForkJoinTask;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 /**
  * Add your docs here.
  */
+
+
+
 public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
+  DoubleSolenoid frontValve;
+  DoubleSolenoid rearValve;
+
+  public Climber() {
+    frontValve = new DoubleSolenoid(12, 0, 1);
+    rearValve  = new DoubleSolenoid(11, 2, 3);
+  }
+
+  public void frontUp(){
+    frontValve.set(Value.kReverse);
+  }
+
+  public void frontDown(){
+    frontValve.set(Value.kForward);
+  }
+
+  public void rearUp(){
+    rearValve.set(Value.kReverse);
+  }
+
+  public void rearDown(){
+    rearValve.set(Value.kForward);
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

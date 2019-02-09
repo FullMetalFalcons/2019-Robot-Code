@@ -11,5 +11,7 @@ package org.usfirst.frc4557.fmf2019;
  * Add your docs here.
  */
 public final class RobotCanID {
-    public static final int COMPRESSORID = 0;
+    public static final int COMPRESSORID = 12;
+    public static final int PWM1 = 11;
+    public static final int PWM2 = 12;
 }
