@@ -7,17 +7,22 @@
 
 package org.usfirst.frc4557.fmf2019.commands;
 
+import org.usfirst.frc4557.fmf2019.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberDown extends Command {
   public ClimberDown() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.climber.frontDown();
+    Robot.climber.rearDown();
   }
 
   // Called repeatedly when this Command is scheduled to run

@@ -7,17 +7,22 @@
 
 package org.usfirst.frc4557.fmf2019.commands;
 
+import org.usfirst.frc4557.fmf2019.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberUp extends Command {
   public ClimberUp() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.climber.frontUp();
+    Robot.climber.rearUp();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -28,7 +33,7 @@ public class ClimberUp extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
