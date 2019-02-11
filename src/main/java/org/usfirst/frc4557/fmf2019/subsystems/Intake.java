@@ -7,6 +7,8 @@
 
 package org.usfirst.frc4557.fmf2019.subsystems;
 
+import com.sun.source.doctree.AttributeTree.ValueKind;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -37,19 +39,19 @@ public class Intake extends Subsystem {
   }
 
   public void wristUp(){
-
+    wrist.set(Value.kReverse);
   }
 
   public void wristDown(){
-
+    wrist.set(Value.kForward);
   }
 
   public void intakeIn(){
-
+    shoot.set(Value.kReverse);
   }
 
   public void intakeOut(){
-    
+    shoot.set(Value.kForward);
   }
 
   @Override
