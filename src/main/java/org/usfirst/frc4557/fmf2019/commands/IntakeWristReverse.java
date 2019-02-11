@@ -7,12 +7,15 @@
 
 package org.usfirst.frc4557.fmf2019.commands;
 
+import org.usfirst.frc4557.fmf2019.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class IntakeWristReverse extends Command {
   public IntakeWristReverse() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.intake);
   }
 
   // Called just before this Command runs the first time
