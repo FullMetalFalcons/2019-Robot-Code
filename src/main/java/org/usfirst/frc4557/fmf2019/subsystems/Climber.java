@@ -8,10 +8,15 @@
 package org.usfirst.frc4557.fmf2019.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import java.util.concurrent.ForkJoinTask;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 /**
  * Add your docs here.
@@ -26,11 +31,20 @@ public class Climber extends Subsystem {
   DoubleSolenoid frontValve;
   DoubleSolenoid rearValve;
 
+  private WPI_TalonSRX leftMotor;
+  private WPI_TalonSRX rightMotor;
+  private SpeedControllerGroup rearDrive;
+  private DifferentialDrive drive;
+
   public Climber() {
 
     frontValve = new DoubleSolenoid(12, 1, 0);
     //rearValve  = new DoubleSolenoid(12, 6, 7);
     rearValve = new DoubleSolenoid(11,3, 2);
+
+    leftMotor = new WPI_TalonSRX(6);
+    rightMotor = new WPI_TalonSRX(7);
+    rearDrive = new SpeedControllerGroup(leftMotor, rightMotor);
   }
 
   public void frontUp(){
@@ -48,6 +62,11 @@ public class Climber extends Subsystem {
   public void rearDown(){
     rearValve.set(Value.kForward);
   }
+
+  public void driveForward(double speed, double turnRate){
+    drive.arcadeDrive(speed, turnRate);
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
