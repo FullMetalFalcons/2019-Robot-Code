@@ -78,7 +78,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Auto mode", chooser);
         climber.rearUp();
         climber.frontUp();
-   
+        intake.up();
+        intake.wristUp();
+        intake.intakeIn();
     }
 
     /**

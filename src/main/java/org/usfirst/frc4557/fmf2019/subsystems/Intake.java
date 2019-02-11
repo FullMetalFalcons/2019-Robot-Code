@@ -36,6 +36,22 @@ public class Intake extends Subsystem {
     lift.set(Value.kReverse);
   }
 
+  public void wristUp(){
+
+  }
+
+  public void wristDown(){
+
+  }
+
+  public void intakeIn(){
+
+  }
+
+  public void intakeOut(){
+    
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
