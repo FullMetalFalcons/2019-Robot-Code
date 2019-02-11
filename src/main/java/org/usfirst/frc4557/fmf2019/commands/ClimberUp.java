@@ -21,8 +21,7 @@ public class ClimberUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.climber.frontUp();
-    Robot.climber.rearUp();
+
   }
 
   // Called repeatedly when this Command is scheduled to run

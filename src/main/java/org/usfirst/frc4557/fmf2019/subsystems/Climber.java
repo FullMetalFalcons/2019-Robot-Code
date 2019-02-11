@@ -27,8 +27,10 @@ public class Climber extends Subsystem {
   DoubleSolenoid rearValve;
 
   public Climber() {
-    frontValve = new DoubleSolenoid(12, 0, 1);
-    rearValve  = new DoubleSolenoid(11, 2, 3);
+
+    frontValve = new DoubleSolenoid(12, 1, 0);
+    //rearValve  = new DoubleSolenoid(12, 6, 7);
+    rearValve = new DoubleSolenoid(11,3, 2);
   }
 
   public void frontUp(){

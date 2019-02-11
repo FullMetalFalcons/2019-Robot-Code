@@ -21,8 +21,7 @@ public class ClimberDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.climber.frontDown();
-    Robot.climber.rearDown();
+   
   }
 
   // Called repeatedly when this Command is scheduled to run
