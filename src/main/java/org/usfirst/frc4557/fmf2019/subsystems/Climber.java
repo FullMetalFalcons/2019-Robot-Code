@@ -32,8 +32,6 @@ public class Climber extends Subsystem {
 
   private WPI_TalonSRX leftMotor;
   private WPI_TalonSRX rightMotor;
-  private SpeedControllerGroup rearDrive;
-  private DifferentialDrive drive;
 
   public Climber() {
 
@@ -41,9 +39,8 @@ public class Climber extends Subsystem {
     //rearValve  = new DoubleSolenoid(12, 6, 7);
     rearValve = new DoubleSolenoid(11,3, 2);
 
-    leftMotor = new WPI_TalonSRX(6);
-    rightMotor = new WPI_TalonSRX(7);
-    rearDrive = new SpeedControllerGroup(leftMotor, rightMotor);
+    leftMotor = new WPI_TalonSRX(12);
+    rightMotor = new WPI_TalonSRX(1);
   }
 
   public void frontUp(){
@@ -62,10 +59,15 @@ public class Climber extends Subsystem {
     rearValve.set(Value.kForward);
   }
 
-  public void driveForward(double speed, double turnRate){
-    drive.arcadeDrive(speed, turnRate);
+  public void driveForward(double speed){
+    leftMotor.set(speed);
+    rightMotor.set(-speed);
   }
 
+  public void stop() {
+    leftMotor.set(0);
+    rightMotor.set(0);
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
