@@ -25,8 +25,8 @@ public class Intake extends Subsystem {
   DoubleSolenoid shoot;
 
   public Intake(){
-    lift = new DoubleSolenoid(11, 4, 5);
- //   wrist = new DoubleSolenoid(moduleNumber, forwardChannel, reverseChannel);
+    lift = new DoubleSolenoid(11, 0, 1);
+    wrist = new DoubleSolenoid(11, 4, 5);
  //   shoot = new DoubleSolenoid(moduleNumber, forwardChannel, reverseChannel);
   }
 

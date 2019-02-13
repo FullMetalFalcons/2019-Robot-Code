@@ -78,9 +78,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Auto mode", chooser);
         climber.rearUp();
         climber.frontUp();
-        intake.up();
-        intake.wristUp();
-        intake.intakeIn();
+        // intake.up();
+        // intake.wristUp();
+        // intake.intakeIn();
     }
 
     /**
@@ -126,6 +126,58 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        System.out.println(oi.rightJoystick.getX());
+        if (oi.rightJoystick.getX() == 1) {
+            System.out.println("Going Down");
+            climber.frontDown();
+            climber.rearDown();
+            //intake.wristDown();
+        }
+
+        if (oi.rightJoystick.getX() == -1) {
+            System.out.println("Going Up");
+            climber.frontUp();
+            climber.rearUp();
+            //intake.wristUp();
+        }
+
+        if (oi.rightJoystick.getY() == 1){
+            //System.out.println("Going Down");
+            //intake.down();
+            //intake.wristDown();
+            climber.driveForward(-0.5);
+        }
+
+        if (oi.rightJoystick.getY() == -1){
+            //System.out.println("Going Up");
+            //intake.up();
+            climber.stop();
+        }
+
+        if (oi.rightJoystick.getRawButton(7)){
+            //System.out.println("Drive Forward");
+            //climber.driveForward(-0.2);
+            intake.up();
+            intake.wristDown();
+        }
+
+        if (oi.rightJoystick.getRawButton(8)){
+            //System.out.println("Drive Stop");
+            //climber.stop();
+            intake.down();
+            intake.wristDown();
+        }
+
+        if (oi.rightJoystick.getRawButton(9)){
+            //System.out.println("Front Up");
+            //climber.frontUp();
+            intake.intakeIn();
+        }
+        
+        if (oi.rightJoystick.getRawButton(10)){
+            intake.intakeOut();
+        }
+
         Scheduler.getInstance().run();
     }
 }
