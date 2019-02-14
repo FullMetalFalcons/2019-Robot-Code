@@ -68,6 +68,11 @@ public class Climber extends Subsystem {
     leftMotor.set(0);
     rightMotor.set(0);
   }
+
+  public void driveReverse(double speed){
+    leftMotor.set(-speed);
+    rightMotor.set(speed);
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
