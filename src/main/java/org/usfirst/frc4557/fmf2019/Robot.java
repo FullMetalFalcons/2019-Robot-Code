@@ -14,6 +14,7 @@ package org.usfirst.frc4557.fmf2019;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -127,56 +128,99 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         System.out.println(oi.rightJoystick.getX());
-        if (oi.rightJoystick.getX() == 1) {
-            System.out.println("Going Down");
-            climber.frontDown();
-            climber.rearDown();
+        //if (oi.rightJoystick.getX() == 1) {
+            //System.out.println("Going Down");
+            //climber.frontDown();
+            //climber.rearDown();
             //intake.wristDown();
-        }
-
-        if (oi.rightJoystick.getX() == -1) {
-            System.out.println("Going Up");
-            climber.frontUp();
-            climber.rearUp();
+        
+        //}
+        driveBase.drive(oi.xbox.getY(Hand.kLeft) / -2, oi.xbox.getY(Hand.kRight) / -2);
+        //if (oi.rightJoystick.getX() == -1) {
+            //System.out.println("Going Up");
+            //climber.frontUp();
+            //climber.rearUp();
             //intake.wristUp();
-        }
+        //}
 
-        if (oi.rightJoystick.getY() == 1){
+        //if (oi.rightJoystick.getY() == 1){
             //System.out.println("Going Down");
             //intake.down();
             //intake.wristDown();
-            climber.driveForward(-0.5);
-        }
+            //climber.driveForward(-0.5);
+        //}
 
-        if (oi.rightJoystick.getY() == -1){
+        //if (oi.rightJoystick.getY() == -1){
             //System.out.println("Going Up");
             //intake.up();
-            climber.stop();
-        }
+            //climber.stop();
+        //}
 
-        if (oi.rightJoystick.getRawButton(7)){
+        //if (oi.rightJoystick.getRawButton(7)){
             //System.out.println("Drive Forward");
             //climber.driveForward(-0.2);
-            intake.up();
-            intake.wristDown();
-        }
+            //intake.up();
+            //intake.wristDown();
+        //}
 
-        if (oi.rightJoystick.getRawButton(8)){
+        //if (oi.rightJoystick.getRawButton(8)){
             //System.out.println("Drive Stop");
             //climber.stop();
-            intake.down();
-            intake.wristDown();
-        }
+            //intake.down();
+            //intake.wristDown();
+        //}
 
-        if (oi.rightJoystick.getRawButton(9)){
+        //if (oi.rightJoystick.getRawButton(9)){
             //System.out.println("Front Up");
             //climber.frontUp();
-            intake.intakeIn();
-        }
+            //intake.intakeIn();
+        //}
         
-        if (oi.rightJoystick.getRawButton(10)){
+        //if (oi.rightJoystick.getRawButton(10)){
+            //intake.intakeOut();
+        //}
+
+        if (oi.xbox.getAButtonPressed()){
+            climber.driveForward(-0.2);
+        }
+
+        if (oi.xbox.getAButtonReleased()){
+            climber.stop();;
+        }
+
+        if (oi.xbox.getBumper(Hand.kLeft)){
+            intake.down();
+            intake.wristUp();
+        }
+
+        if (oi.xbox.getBumper(Hand.kRight)){
+            intake.up();
+            intake.wristUp();
+        }
+
+        if (oi.xbox.getStickButton(Hand.kRight)){
+            climber.rearDown();
+            climber.frontDown();
+        }
+
+        if (oi.xbox.getStickButton(Hand.kLeft)){
+            climber.frontUp();
+            climber.rearDown();
+        }
+
+        if (oi.xbox.getBButton()){
             intake.intakeOut();
         }
+
+        if (oi.xbox.getXButton()){
+            intake.intakeIn();
+        }
+
+        if (oi.xbox.getBackButton()){
+            climber.frontUp();
+            climber.rearUp();
+        }
+
 
         Scheduler.getInstance().run();
     }
