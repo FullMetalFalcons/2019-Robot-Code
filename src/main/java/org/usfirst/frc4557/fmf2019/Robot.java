@@ -221,6 +221,7 @@ public class Robot extends TimedRobot {
             climber.rearUp();
         }
 
+        climber.periodic();
 
         Scheduler.getInstance().run();
     }
