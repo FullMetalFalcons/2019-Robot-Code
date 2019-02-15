@@ -9,13 +9,16 @@ package org.usfirst.frc4557.fmf2019.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.concurrent.ForkJoinTask;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 /**
  * Add your docs here.
@@ -33,6 +36,8 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX leftMotor;
   private WPI_TalonSRX rightMotor;
 
+  private AnalogInput ultrasonic = new AnalogInput(0);
+
   public Climber() {
 
     frontValve = new DoubleSolenoid(12, 1, 0);
@@ -41,6 +46,8 @@ public class Climber extends Subsystem {
 
     leftMotor = new WPI_TalonSRX(12);
     rightMotor = new WPI_TalonSRX(1);
+
+  
   }
 
   public void frontUp(){
@@ -73,9 +80,25 @@ public class Climber extends Subsystem {
     leftMotor.set(-speed);
     rightMotor.set(speed);
   }
+
+  public void UltrasonicSensor() {
+    SmartDashboard.putData("range", ultrasonic);
+    double currentDistance = ultrasonic.getVoltage();
+    System.out.println(currentDistance);
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+
+  public void periodic()  {
+
+    
+      SmartDashboard.putData("range", ultrasonic);
+      double currentDistance = ultrasonic.getVoltage();
+      System.out.println(currentDistance);
+    
+
   }
 }
