@@ -14,6 +14,11 @@ public class ClimbRoutine extends CommandGroup {
    * Add your docs here.
    */
   public ClimbRoutine() {
+
+    addSequential(new ClimberUp());
+    addSequential(new ClimberDrive());
+    addSequential(new ClimberFinale());
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

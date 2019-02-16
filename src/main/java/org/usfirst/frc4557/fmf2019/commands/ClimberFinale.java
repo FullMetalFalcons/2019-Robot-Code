@@ -7,55 +7,66 @@
 
 package org.usfirst.frc4557.fmf2019.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc4557.fmf2019.Robot;
 
-public class ClimberDrive extends Command {
+import edu.wpi.first.wpilibj.command.Command;
 
-  private double currentHeight;
-  private boolean done;
+public class ClimberFinale extends Command {
+  private double rearChasisHeight ;
   private double startTime;
-  static final int WAITTIME = 10;
-  public ClimberDrive() {
+  private boolean done;
+  static final int WAITTIME = 3;
+  public ClimberFinale() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.driveBase);
     requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    setTimeout(15);
+    rearChasisHeight = Robot.climber.getRearChasisHeight();
     done= false;
-    startTime = 0;
-    currentHeight = Robot.climber.getFrontChasisHeight();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.climber.getFrontChasisHeight() < 7) {
-      if (startTime == 0) {
-        // We front wheel is on the platform
-        Robot.climber.stop();
+    // Drive Until middle of the robot is on the platform
+    if (rearChasisHeight > 7) {
+      Robot.driveBase.drive(0.3, 0.3);
+      Robot.climber.driveForward(0.3);
+    } else {
+      if (startTime ==0) {
+        Robot.driveBase.drive(0.1, 0.1);
+        Robot.intake.wristDown();
         startTime =System.currentTimeMillis();
-        Robot.climber.frontUp();
+        Robot.climber.stop();
+        Robot.climber.rearUp();
       } else {
-        // Wait until the WAITTIME has passed
-        if ( System.currentTimeMillis() - startTime > WAITTIME ){
+        if (System.currentTimeMillis() - startTime > WAITTIME)
+        {
+          Robot.driveBase.drive(0.3,0.3);
+          try {
+            Thread.sleep(500);
+          } catch (Exception e) {
+            System.out.println(e);
+            done = true;
+          }
+          Robot.driveBase.drive(0, 0);
           done = true;
         }
       }
-    } else {
-      // Continue to drive since the front wheel has not clear the platform
-      Robot.climber.driveForward(0.3);
     }
   }
+
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return done;
+    return false;
   }
+
   // Called once after isFinished returns true
   @Override
   protected void end() {
