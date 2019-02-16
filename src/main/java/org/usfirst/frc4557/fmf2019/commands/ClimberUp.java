@@ -13,6 +13,7 @@ public class ClimberUp extends Command {
 
   private double previousHeight;
   private boolean done;
+  private double startTime;
 
   public ClimberUp() {
     // Use requires() here to declare subsystem dependencies
@@ -24,21 +25,34 @@ public class ClimberUp extends Command {
   @Override
   protected void initialize() {
     previousHeight = 0;
+    startTime = System.currentTimeMillis();
+    setTimeout(2);
     done = false;
+    System.out.println("Command Initialize");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double currentHeight = Robot.climber.getFrontChasisHeight();
+    System.out.println(currentHeight + "---" + previousHeight);
     
-    if (previousHeight ==0)
+    
+    if (System.currentTimeMillis() - startTime > 10000)
+    {
+      System.out.println("CommandTimedOut******");
+      done=true;
+    }
+    if (previousHeight == 0)
     {
       Robot.climber.frontDown();
       Robot.climber.rearDown();
+      previousHeight =currentHeight;
     } else {
-      double currentHeight = Robot.climber.getFrontChasisHeight();
+      
       if (currentHeight == previousHeight)
       {
+        System.out.println("Reached------------------------");
         done = true;
       } else {
         previousHeight = currentHeight;

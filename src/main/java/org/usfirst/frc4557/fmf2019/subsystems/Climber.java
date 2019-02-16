@@ -78,8 +78,8 @@ public class Climber extends Subsystem {
   }
 
   public void driveReverse(double speed){
-    leftMotor.set(-speed);
-    rightMotor.set(speed);
+    leftMotor.set(speed);
+    rightMotor.set(-speed);
   }
   public double getFrontChasisHeight()
   {
@@ -99,7 +99,7 @@ public class Climber extends Subsystem {
   }
 
   public void periodic()  {
-
+    //System.out.println(frontultrasonic.getVoltage());
     SmartDashboard.putNumber("front height", this.getFrontChasisHeight());
     SmartDashboard.putNumber("rear height", this.getRearChasisHeight());
   }

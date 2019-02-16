@@ -15,7 +15,7 @@ public class ClimberDrive extends Command {
   private double currentHeight;
   private boolean done;
   private double startTime;
-  static final int WAITTIME = 10;
+  static final int WAITTIME = 100;
   public ClimberDrive() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -34,9 +34,9 @@ public class ClimberDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.climber.getFrontChasisHeight() < 7) {
+    if (Robot.climber.getFrontChasisHeight() < 30) {
       if (startTime == 0) {
-        // We front wheel is on the platform
+        // The front wheel is on the platform
         Robot.climber.stop();
         startTime =System.currentTimeMillis();
         Robot.climber.frontUp();
