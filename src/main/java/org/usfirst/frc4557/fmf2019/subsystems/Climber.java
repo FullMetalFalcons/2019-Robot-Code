@@ -36,8 +36,8 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX leftMotor;
   private WPI_TalonSRX rightMotor;
 
-  private AnalogInput ultrasonic = new AnalogInput(0);
-
+  private AnalogInput frontultrasonic = null;
+  private AnalogInput rearultrasonic = null;
   public Climber() {
 
     frontValve = new DoubleSolenoid(12, 1, 0);
@@ -47,7 +47,8 @@ public class Climber extends Subsystem {
     leftMotor = new WPI_TalonSRX(12);
     rightMotor = new WPI_TalonSRX(1);
 
-  
+    frontultrasonic = new AnalogInput(0);
+    rearultrasonic = new AnalogInput(1);
   }
 
   public void frontUp(){
@@ -80,12 +81,17 @@ public class Climber extends Subsystem {
     leftMotor.set(-speed);
     rightMotor.set(speed);
   }
-
-  public void UltrasonicSensor() {
-    SmartDashboard.putData("range", ultrasonic);
-    double currentDistance = ultrasonic.getVoltage();
-    System.out.println(currentDistance);
+  public double getFrontChasisHeight()
+  {
+    // Ultrasound scaling factor ~9.8mV/in
+    return frontultrasonic.getVoltage() * 1000 / 9.8;
   }
+
+  public double getRearChasisHeight()
+  {
+    return rearultrasonic.getVoltage() * 1000 / 9.8;
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -94,11 +100,7 @@ public class Climber extends Subsystem {
 
   public void periodic()  {
 
-    
-      SmartDashboard.putData("range", ultrasonic);
-      double currentDistance = ultrasonic.getVoltage();
-      System.out.println(currentDistance);
-    
-
+    SmartDashboard.putNumber("front height", this.getFrontChasisHeight());
+    SmartDashboard.putNumber("rear height", this.getRearChasisHeight());
   }
 }
