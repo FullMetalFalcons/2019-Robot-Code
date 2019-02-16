@@ -50,13 +50,11 @@ public class ClimberDrive extends Command {
       Robot.climber.driveForward(0.3);
     }
   }
-
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return done;
   }
-
   // Called once after isFinished returns true
   @Override
   protected void end() {
