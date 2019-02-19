@@ -38,6 +38,9 @@ public class Climber extends Subsystem {
 
   private AnalogInput frontultrasonic = null;
   private AnalogInput rearultrasonic = null;
+
+  private  final AnalogInput pressureSensor;
+
   public Climber() {
 
     frontValve = new DoubleSolenoid(12, 1, 0);
@@ -49,6 +52,8 @@ public class Climber extends Subsystem {
 
     frontultrasonic = new AnalogInput(0);
     rearultrasonic = new AnalogInput(1);
+
+    pressureSensor = new AnalogInput(2);
   }
 
   public void frontUp(){
@@ -92,6 +97,10 @@ public class Climber extends Subsystem {
     return rearultrasonic.getVoltage() * 1000 / 9.8;
   }
 
+  public double getPressure(){
+    return 150 * pressureSensor.getVoltage() / 4.0 - 25.0;
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -102,5 +111,6 @@ public class Climber extends Subsystem {
     //System.out.println(frontultrasonic.getVoltage());
     SmartDashboard.putNumber("front height", this.getFrontChasisHeight());
     SmartDashboard.putNumber("rear height", this.getRearChasisHeight());
+    SmartDashboard.putNumber("Pressure", this.getPressure());
   }
 }
