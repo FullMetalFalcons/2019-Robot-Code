@@ -39,11 +39,11 @@ public class Intake extends Subsystem {
   }
 
   public void wristUp(){
-    wrist.set(Value.kReverse);
+    wrist.set(Value.kForward);
   }
 
   public void wristDown(){
-    wrist.set(Value.kForward);
+    wrist.set(Value.kReverse);
   }
 
   public void intakeIn(){
