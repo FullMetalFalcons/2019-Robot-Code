@@ -48,7 +48,7 @@ public class ClimberDrive extends Command {
       }
     } else {
       // Continue to drive since the front wheel has not clear the platform
-      Robot.climber.driveForward(0.3);
+      Robot.climber.driveForward(0.1);
     }
   }
   // Make this return true when this Command no longer needs to run execute()
