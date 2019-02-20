@@ -6,7 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc4557.fmf2019.commands;
-
+import java.lang.Math;
+import java.lang.Thread;
 import javax.lang.model.util.ElementScanner6;
 
 import org.usfirst.frc4557.fmf2019.Robot;
@@ -43,6 +44,11 @@ public class ClimberWithStablizer extends Command {
       isStarted = true;
       return;
     }
+
+    if (System.currentTimeMillis() - startTime < 1000)
+    {
+      return;
+    }
     float roll = Robot.driveBase.getRoll();
 System.out.println("Speed" + Robot.driveBase.getVelocityZ() + " -- " + "Roll=" + roll );
 
@@ -50,26 +56,29 @@ System.out.println("Speed" + Robot.driveBase.getVelocityZ() + " -- " + "Roll=" +
     if (roll > 1.5) {
       //front is too fast -- slow front down
       Robot.climber.frontUp();
-      System.out.println("FrontUP");
-      try {
-        Thread.sleep(2);
-      } catch (Exception e) {
-        //TODO: handle exception
-      }
+      
+      long runtime = Math.abs(Math.round(roll));
+      System.out.println("FrontUP -- " + runtime);
+      // try {
+      //   Thread.sleep(runtime);
+      // } catch (Exception e) {
+      //   //TODO: handle exception
+      // }
     } else {
       //Robot.climber.rearDown();
     }
     
-    if (roll < -2.5) {
+    if (roll < -3.5) {
       // rear is too fast -- slow rear down
       Robot.climber.rearUp();
       System.out.println("RearUP");
-     
-      try {
-        Thread.sleep(2);
-      } catch (Exception e) {
-        //TODO: handle exception
-      }
+      long runtime =  Math.abs(Math.round(roll));
+      System.out.println("RearUP -- " + runtime);
+      // try {
+      //   Thread.sleep(runtime);
+      // } catch (Exception e) {
+      //   //TODO: handle exception
+      // }
     } else {
       //Robot.climber.rearDown();
     }
