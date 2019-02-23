@@ -199,8 +199,10 @@ public class Robot extends TimedRobot {
         }
 
         if (oi.xbox.getBumper(Hand.kRight)){
-            intake.up();
-            intake.wristDown();
+            //intake.up();
+            //intake.wristDown();
+            TurnToAngle turncmd = new TurnToAngle(45);
+            turncmd.start();
         }
 
         if (oi.xbox.getStickButton(Hand.kRight)){

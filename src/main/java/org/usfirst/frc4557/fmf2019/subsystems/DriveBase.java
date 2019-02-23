@@ -223,6 +223,10 @@ public class DriveBase extends Subsystem {
         return leftFrontTalonSRX.getSelectedSensorVelocity();
     }
 
+    public double getGyro(){
+        return ahrs.getAngle();
+      }
+
     class PlotThread implements Runnable {
         Robot robot;
         
@@ -254,5 +258,27 @@ public class DriveBase extends Subsystem {
             }
 		}
 	}
+
+	public void turnToAngle() {
+       
+    }
+
+    public void turnToAngleTest(){
+        
+    }
+    
+    public void stopL(){
+        leftSpeedController.set(0.0);
+      }
+    
+      public void stopR(){
+        rightSpeedController.set(0.0);
+      }
+    
+      public void stop(){
+        stopL();
+        stopR();
+      }
+    
 }
 
