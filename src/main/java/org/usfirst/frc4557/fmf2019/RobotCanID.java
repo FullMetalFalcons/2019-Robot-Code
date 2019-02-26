@@ -8,7 +8,7 @@
 package org.usfirst.frc4557.fmf2019;
 
 /**
- * Add your docs here.
+ * These are simpily CAN id's so that we dont have to retype in the ID Number
  */
 public final class RobotCanID {
     public static final int COMPRESSORID = 12;
