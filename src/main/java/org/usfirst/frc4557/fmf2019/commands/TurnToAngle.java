@@ -38,7 +38,9 @@ public class TurnToAngle extends Command {
 	double way = 1;
 	int n = 0;
 	int i = 0;
-  boolean pid = false;
+	boolean pid = false;
+	
+	AHRS ahrs;
 
   public TurnToAngle(double newdirection) {
     // Use requires() here to declare subsystem dependencies
@@ -64,6 +66,7 @@ public class TurnToAngle extends Command {
 		i = 0;
     pid = false;
 
+		ahrs.zeroYaw();
     
   }
 
