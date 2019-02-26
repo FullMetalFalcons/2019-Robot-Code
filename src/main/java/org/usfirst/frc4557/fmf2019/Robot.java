@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
-        // pointers. Bad news. Don't move it.
+        // pointers. Bad news. Don't move it. 
         oi = new OI();
 
         // Add commands to Autonomous Sendable Chooser
@@ -83,9 +83,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Auto mode", chooser);
         climber.rearUp();
         climber.frontUp();
-        // intake.up();
-        // intake.wristUp();
-        // intake.intakeIn();
+        intake.up();
+        intake.wristUp();
+        intake.intakeIn();
     }
 
     /**
