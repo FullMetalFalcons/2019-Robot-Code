@@ -39,8 +39,6 @@ public class TurnToAngle extends Command {
 	int n = 0;
 	int i = 0;
 	boolean pid = false;
-	
-	AHRS ahrs;
 
   public TurnToAngle(double newdirection) {
     // Use requires() here to declare subsystem dependencies
@@ -66,7 +64,8 @@ public class TurnToAngle extends Command {
 		i = 0;
     pid = false;
 
-		ahrs.zeroYaw();
+
+		Robot.driveBase.resetGyro();
     
   }
 
@@ -121,14 +120,17 @@ public class TurnToAngle extends Command {
   protected boolean isFinished() {
 
     
-    return (Robot.driveBase.getGyro() > 2 + direction);
+		return !(Robot.driveBase.getGyro() < 2 + direction && Robot.driveBase.getGyro() > direction - 2);
+		
+
+		
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     pid = false;
-    Robot.driveBase.stop();
+		Robot.driveBase.stop();
   }
 
   // Called when another command which requires one or more of the same
