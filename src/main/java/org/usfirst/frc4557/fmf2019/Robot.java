@@ -206,11 +206,11 @@ public class Robot extends TimedRobot {
         }
 
         if (oi.xbox.getStickButton(Hand.kRight)){
-           //ClimberUp climb = new ClimberUp();
-           //climb.start();
+           ClimberWithStablizer climb = new ClimberWithStablizer();
+           climb.start();
 
-            climber.rearDown();
-            climber.frontDown();
+            //climber.rearDown();
+            //climber.frontDown();
         }
 
         if (oi.xbox.getStickButton(Hand.kLeft)){

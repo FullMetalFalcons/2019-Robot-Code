@@ -222,7 +222,14 @@ public class DriveBase extends Subsystem {
     public double getTalonLeftSpeed(){
         return leftFrontTalonSRX.getSelectedSensorVelocity();
     }
+    public float getRoll() {
+        return ahrs.getRoll();
+        
+    }
 
+    public float getVelocityZ() {
+        return ahrs.getVelocityZ();
+    }
     public double getGyro(){
         return ahrs.getAngle();
       }
