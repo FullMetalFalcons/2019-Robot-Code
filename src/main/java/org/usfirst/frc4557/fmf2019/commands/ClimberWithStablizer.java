@@ -55,10 +55,10 @@ System.out.println("Speed" + Robot.driveBase.getVelocityZ() + " -- " + "Roll=" +
 
     if (roll > 1.5) {
       //front is too fast -- slow front down
-      Robot.climber.frontUp();
+      Robot.climber.stop();
       
       long runtime = Math.abs(Math.round(roll));
-      System.out.println("FrontUP -- " + runtime);
+      System.out.println("FrontSTOP -- " + runtime);
       // try {
       //   Thread.sleep(runtime);
       // } catch (Exception e) {
@@ -70,10 +70,10 @@ System.out.println("Speed" + Robot.driveBase.getVelocityZ() + " -- " + "Roll=" +
     
     if (roll < -3.5) {
       // rear is too fast -- slow rear down
-      Robot.climber.rearUp();
-      System.out.println("RearUP");
+      Robot.climber.stop();
+      System.out.println("RearSTOP");
       long runtime =  Math.abs(Math.round(roll));
-      System.out.println("RearUP -- " + runtime);
+      System.out.println("RearSTOP -- " + runtime);
       // try {
       //   Thread.sleep(runtime);
       // } catch (Exception e) {
