@@ -7,8 +7,6 @@
 
 package org.usfirst.frc4557.fmf2019.commands;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import org.usfirst.frc4557.fmf2019.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;

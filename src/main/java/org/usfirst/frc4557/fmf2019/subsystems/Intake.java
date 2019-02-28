@@ -7,8 +7,6 @@
 
 package org.usfirst.frc4557.fmf2019.subsystems;
 
-import com.sun.source.doctree.AttributeTree.ValueKind;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;

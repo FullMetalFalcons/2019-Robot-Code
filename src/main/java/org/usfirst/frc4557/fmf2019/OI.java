@@ -13,9 +13,7 @@ package org.usfirst.frc4557.fmf2019;
 
 import org.usfirst.frc4557.fmf2019.commands.*;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc4557.fmf2019.commands.ClimberDown;
 import org.usfirst.frc4557.fmf2019.commands.ClimberUp;
