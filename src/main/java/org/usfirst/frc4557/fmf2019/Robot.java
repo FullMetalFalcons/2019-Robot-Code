@@ -130,61 +130,18 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        //if (oi.rightJoystick.getX() == 1) {
-            //System.out.println("Going Down");
-            //climber.frontDown();
-            //climber.rearDown();
-            //intake.wristDown();
-        
-        //}
+
         driveBase.drive(oi.playstayController.getY(Hand.kLeft) / -1.1, oi.playstayController.getY(Hand.kRight) / -1.1 );
-        //if (oi.rightJoystick.getX() == -1) {
-            //System.out.println("Going Up");
-            //climber.frontUp();
-            //climber.rearUp();
-            //intake.wristUp();
-        //}
 
-        //if (oi.rightJoystick.getY() == 1){
-            //System.out.println("Going Down");
-            //intake.down();
-            //intake.wristDown();
-            //climber.driveForward(-0.5);
-        //}
+        if (oi.xbox.getY(Hand.kRight) >= 0.2){
+            intake.up();
+        }
 
-        //if (oi.rightJoystick.getY() == -1){
-            //System.out.println("Going Up");
-            //intake.up();
-            //climber.stop();
-        //}
-
-        //if (oi.rightJoystick.getRawButton(7)){
-            //System.out.println("Drive Forward");
-            //climber.driveForward(-0.2);
-            //intake.up();
-            //intake.wristDown();
-        //}
-
-        //if (oi.rightJoystick.getRawButton(8)){
-            //System.out.println("Drive Stop");
-            //climber.stop();
-            //intake.down();
-            //intake.wristDown();
-        //}
-
-        //if (oi.rightJoystick.getRawButton(9)){
-            //System.out.println("Front Up");
-            //climber.frontUp();
-            //intake.intakeIn();
-        //}
-        
-        //if (oi.rightJoystick.getRawButton(10)){
-            //intake.intakeOut();
-        //}
+        if (oi.xbox.getY(Hand.kRight) <= -0.2){
+            intake.down();
+        }
 
         if (oi.xbox.getAButtonPressed()){
-            //ClimberDrive climberdrive = new ClimberDrive();
-            //climberdrive.start(); 
             climber.driveForward(-0.45);
         }
 
@@ -198,8 +155,6 @@ public class Robot extends TimedRobot {
         }
 
         if (oi.xbox.getBumper(Hand.kRight)){
-            //intake.up();
-            //intake.wristDown();
             TurnToAngle turncmd = new TurnToAngle(20);
             turncmd.start();
         }
@@ -237,6 +192,14 @@ public class Robot extends TimedRobot {
 
         if (oi.xbox.getStartButton()){
             intake.wristUp();
+        }
+
+        if (oi.playstayController.getBumper(Hand.kLeft)) {
+        driveBase.drive(oi.playstayController.getY(Hand.kLeft) / -1, oi.playstayController.getY(Hand.kRight) / -1 );
+        }
+
+        if (oi.playstayController.getBumper(Hand.kRight)){
+        driveBase.drive(oi.playstayController.getY(Hand.kLeft) / -1.5, oi.playstayController.getY(Hand.kRight) / -1.5 );
         }
 
         Scheduler.getInstance().run();
