@@ -12,7 +12,7 @@ import org.usfirst.frc4557.fmf2019.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberWithStablizer extends Command {
-  private double warmuptime = 1000;
+  private double warmuptime = 3000;
   private double commandtimeout = 7000;
   private boolean isDone = false;
 
@@ -51,12 +51,14 @@ public class ClimberWithStablizer extends Command {
     {
       return;
     } 
-    if (currentMilli - startTime > commandtimeout)
+    if (currentMilli - startTime < commandtimeout)
     {
       isDone = true;
       return;
     }
     float roll = Robot.driveBase.getRoll();
+
+    System.out.println("Roll=>" + roll);
     if (roll > 1.5) {
       //front is too fast -- slow front down
       Robot.climber.frontStop();
