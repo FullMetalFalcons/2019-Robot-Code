@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberWithStablizer extends Command {
   private double warmuptime = 3000;
-  private double commandtimeout = 7000;
+  private double commandtimeout = 30000;
   private boolean isDone = false;
 
   private double startTime;
@@ -51,7 +51,7 @@ public class ClimberWithStablizer extends Command {
     {
       return;
     } 
-    if (currentMilli - startTime < commandtimeout)
+    if (currentMilli - startTime > commandtimeout)
     {
       isDone = true;
       return;
@@ -62,15 +62,15 @@ public class ClimberWithStablizer extends Command {
     if (roll > 1.5) {
       //front is too fast -- slow front down
       Robot.climber.frontStop();
-    } else if(roll < -3.5) {
+    } else if(roll < -1.5) {
       Robot.climber.rearStop();
       // rear is too fast -- slow rear down
     } else {
       Robot.climber.frontDown();  
       Robot.climber.rearDown();
     }
-
-    isDone = (previousHeight == currentHeight);
+    System.out.println("Elapsed:" + (currentMilli - startTime) + " --- Ultrasound:" + currentHeight);
+    //isDone = (previousHeight == currentHeight);
     previousHeight = currentHeight;
   }
 
@@ -86,6 +86,7 @@ public class ClimberWithStablizer extends Command {
   protected void end() {
     Robot.climber.frontStop();
     Robot.climber.rearStop();
+    Robot.isAutonomous = false;
   }
 
   // Called when another command which requires one or more of the same
