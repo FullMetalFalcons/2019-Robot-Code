@@ -39,6 +39,9 @@ public class Climber extends Subsystem {
 
   private  final AnalogInput pressureSensor;
 
+  public enum PistonPosition {
+    FRONT, REAR
+  }
   public Climber() {
 
     frontValve = new DoubleSolenoid(12, 1, 0);
@@ -61,7 +64,9 @@ public class Climber extends Subsystem {
   public void frontDown(){
     frontValve.set(Value.kForward);
   }
-
+  public void frontStop(){
+    frontValve.set(Value.kOff);
+  }
   public void rearUp(){
     rearValve.set(Value.kReverse);
   }
@@ -70,6 +75,10 @@ public class Climber extends Subsystem {
     rearValve.set(Value.kForward);
   }
 
+  public void rearStop() {
+    rearValve.set(Value.kOff);
+  }
+  
   public void driveForward(double speed){
     leftMotor.set(speed);
     rightMotor.set(-speed);
@@ -79,6 +88,8 @@ public class Climber extends Subsystem {
     leftMotor.set(0);
     rightMotor.set(0);
   }
+
+
 
   public void driveReverse(double speed){
     leftMotor.set(speed);
@@ -111,4 +122,5 @@ public class Climber extends Subsystem {
     SmartDashboard.putNumber("rear height", this.getRearChasisHeight());
     SmartDashboard.putNumber("Pressure", this.getPressure());
   }
+
 }

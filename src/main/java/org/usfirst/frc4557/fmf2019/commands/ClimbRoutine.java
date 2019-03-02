@@ -7,6 +7,10 @@
 
 package org.usfirst.frc4557.fmf2019.commands;
 
+import java.awt.Robot;
+
+import org.usfirst.frc4557.fmf2019.subsystems.Climber;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ClimbRoutine extends CommandGroup {
@@ -15,8 +19,11 @@ public class ClimbRoutine extends CommandGroup {
    */
   public ClimbRoutine() {
 
-    addSequential(new ClimberUp());
-    addSequential(new ClimberDrive());
+    addSequential(new ClimberWithStablizer());
+    addSequential(new ClimberDrive(Climber.PistonPosition.FRONT));
+    addSequential(new ClimberRetractPiston(Climber.PistonPosition.FRONT, 5000));
+    addSequential(new ClimberDrive(Climber.PistonPosition.REAR));
+    addSequential(new ClimberRetractPiston(Climber.PistonPosition.REAR, 5000));
     //addSequential(new ClimberFinale());
 
     // Add Commands here:

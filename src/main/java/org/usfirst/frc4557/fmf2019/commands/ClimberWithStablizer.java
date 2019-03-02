@@ -8,16 +8,18 @@
 package org.usfirst.frc4557.fmf2019.commands;
 import java.lang.Math;
 import java.lang.Thread;
-import javax.lang.model.util.ElementScanner6;
-
 import org.usfirst.frc4557.fmf2019.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberWithStablizer extends Command {
+  private double warmuptime = 1000;
+  private double commandtimeout = 7000;
+  private boolean isDone = false;
+
   private double startTime;
   private boolean isStarted = false;
-  private boolean done = false;
+  private double previousHeight = 0;
+  
   public ClimberWithStablizer() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -30,79 +32,65 @@ public class ClimberWithStablizer extends Command {
   protected void initialize() {
     isStarted = false;
     startTime = System.currentTimeMillis();
-    done =false;
+    isDone =false;
+    // Start the climb
+    Robot.climber.frontDown();
+    Robot.climber.rearDown();
+  
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    if (!isStarted)
+    
+    double currentHeight = Robot.climber.getFrontChasisHeight();
+    double currentMilli = System.currentTimeMillis();
+  
+    // Wait for x ms before stablizing
+    if (currentMilli - startTime < warmuptime)
     {
-      Robot.climber.frontDown();
-      Robot.climber.rearDown();
-      isStarted = true;
       return;
-    }
-
-    if (System.currentTimeMillis() - startTime < 1000)
+    } 
+    if (currentMilli - startTime > commandtimeout)
     {
+      isDone = true;
       return;
     }
     float roll = Robot.driveBase.getRoll();
-System.out.println("Speed" + Robot.driveBase.getVelocityZ() + " -- " + "Roll=" + roll );
-
-
     if (roll > 1.5) {
       //front is too fast -- slow front down
-      Robot.climber.stop();
-      
-      long runtime = Math.abs(Math.round(roll));
-      System.out.println("FrontSTOP -- " + runtime);
-      // try {
-      //   Thread.sleep(runtime);
-      // } catch (Exception e) {
-      //   //TODO: handle exception
-      // }
-    } else {
-      //Robot.climber.rearDown();
-    }
-    
-    if (roll < -3.5) {
+      Robot.climber.frontStop();
+    } else if(roll < -3.5) {
+      Robot.climber.rearStop();
       // rear is too fast -- slow rear down
-      Robot.climber.stop();
-      System.out.println("RearSTOP");
-      long runtime =  Math.abs(Math.round(roll));
-      System.out.println("RearSTOP -- " + runtime);
-      // try {
-      //   Thread.sleep(runtime);
-      // } catch (Exception e) {
-      //   //TODO: handle exception
-      // }
     } else {
-      //Robot.climber.rearDown();
+      Robot.climber.frontDown();  
+      Robot.climber.rearDown();
     }
 
-    Robot.climber.frontDown();  
-    Robot.climber.rearDown();
-    done = (System.currentTimeMillis() - startTime > 7000);
-    //done = (Robot.driveBase.getVelocityZ() == 0);
+    isDone = (previousHeight == currentHeight);
+    previousHeight = currentHeight;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return done;
+    
+    return isDone;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.climber.frontStop();
+    Robot.climber.rearStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.climber.frontStop();
+    Robot.climber.rearStop();
   }
 }

@@ -201,21 +201,15 @@ public class DriveBase extends Subsystem {
 
 
     public void resetGyro(){
-
         ahrs.zeroYaw();
-
     }
 
     public void drive(double left, double right) {
-    
         diffDrive.tankDrive(left, right);
-    
     }
 
     public double getTalonRightSpeed() {
         return rightFrontTalonSRX.getSelectedSensorVelocity();
-        
-        
     }
 
     public double getTalonLeftSpeed(){

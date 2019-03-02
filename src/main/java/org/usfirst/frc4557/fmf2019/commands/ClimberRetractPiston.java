@@ -7,75 +7,73 @@
 
 package org.usfirst.frc4557.fmf2019.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc4557.fmf2019.Robot;
 import org.usfirst.frc4557.fmf2019.subsystems.Climber;
 
-public class ClimberDrive extends Command {
-  
-  private double currentHeight;
+import edu.wpi.first.wpilibj.command.Command;
+
+public class ClimberRetractPiston extends Command {
+  private Climber.PistonPosition target;
+  private double waitTime;
   private boolean done;
   private double startTime;
-  private Climber.PistonPosition target;
 
-  static final int WAITTIME = 100;
-  public ClimberDrive(Climber.PistonPosition pos) {
+  public ClimberRetractPiston(Climber.PistonPosition pos, double duration) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.climber);
     target = pos;
+    waitTime = duration;
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    setTimeout(15);
-    done= false;
-    startTime = 0;
-    currentHeight = getChasisHeight();
-    Robot.climber.driveForward(0.1);
+    done = false;
+    startTime = System.currentTimeMillis();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (getChasisHeight() < 30) {
-        Robot.climber.stop();
-        done = true;
-     } else {
-      // Continue to drive since the front wheel has not clear the platform
-      Robot.climber.driveForward(0.1);
+    if (System.currentTimeMillis() - startTime > waitTime)
+    {
+      done = true;
     }
+    if (target == Climber.PistonPosition.FRONT)
+    {
+      Robot.climber.frontUp();
+    }
+    if (target == Climber.PistonPosition.REAR)
+    {
+      Robot.climber.rearUp();
+    }
+
   }
+
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-
-    if ( System.currentTimeMillis() - startTime > WAITTIME) {
-      System.out.println("Climber Drive ended with timeout");
-      return true;
-    }
     return done;
   }
+
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.climber.stop();
+    if (target == Climber.PistonPosition.FRONT)
+    {
+      Robot.climber.frontStop();
+    }
+    if (target == Climber.PistonPosition.REAR)
+    {
+      Robot.climber.rearStop();
+    }
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
-
-  private double getChasisHeight()
-  {
-    if (target == Climber.PistonPosition.FRONT)
-    {
-      return Robot.climber.getFrontChasisHeight();
-    } else {
-      return Robot.climber.getRearChasisHeight();
-    }
   }
 }
