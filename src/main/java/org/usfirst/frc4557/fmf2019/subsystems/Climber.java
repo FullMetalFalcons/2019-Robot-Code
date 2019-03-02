@@ -89,17 +89,6 @@ public class Climber extends Subsystem {
     rightMotor.set(0);
   }
 
-<<<<<<< HEAD
-
-=======
-  public void frontStop() {
-    frontValve.set(Value.kOff);
-  }
-
-  public void rearStop() {
-    rearValve.set(Value.kOff);
-  }
->>>>>>> 786549556fc7ec763d6b978eec5c00aa11b397f6
 
   public void driveReverse(double speed){
     leftMotor.set(speed);
