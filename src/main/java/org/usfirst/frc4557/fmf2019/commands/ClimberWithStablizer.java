@@ -12,8 +12,8 @@ import org.usfirst.frc4557.fmf2019.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberWithStablizer extends Command {
-  private double warmuptime = 3000;
-  private double commandtimeout = 30000;
+  private double warmuptime = 10000;
+  private double commandtimeout = 60000;
   private boolean isDone = false;
 
   private double startTime;
@@ -70,7 +70,7 @@ public class ClimberWithStablizer extends Command {
       Robot.climber.rearDown();
     }
     System.out.println("Elapsed:" + (currentMilli - startTime) + " --- Ultrasound:" + currentHeight);
-    //isDone = (previousHeight == currentHeight);
+    //isDone = (previousHeight == currentHeight); 
     previousHeight = currentHeight;
   }
 

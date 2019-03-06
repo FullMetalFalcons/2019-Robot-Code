@@ -78,8 +78,11 @@ public class TurnToAngle extends Command {
     PIDAdjustment = pAdjustment + iAdjustment + dAdjustment;
 
 
+		double gyroYaw = Robot.driveBase.getGyro();
 
-    if (Robot.driveBase.getGyro() < 10 + direction && Robot.driveBase.getGyro() > direction - 10) {
+		
+
+    if (gyroYaw < 10 + direction && gyroYaw > direction - 10) {
 			if (pid == false) {
 				iAdjustment = 0;
 				pid = true;
@@ -118,17 +121,19 @@ public class TurnToAngle extends Command {
   protected boolean isFinished() {
 
     
-		return !(Robot.driveBase.getGyro() < 2 + direction && Robot.driveBase.getGyro() > direction - 2);
+		return Robot.driveBase.getGyro() < 2 + direction && Robot.driveBase.getGyro() > direction - 2;
 		
 
-		
+
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     pid = false;
+		Robot.isTurning = false;
 		Robot.driveBase.stop();
+		
   }
 
   // Called when another command which requires one or more of the same

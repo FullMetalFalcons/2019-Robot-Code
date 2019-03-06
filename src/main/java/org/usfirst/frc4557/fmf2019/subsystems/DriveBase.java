@@ -202,6 +202,7 @@ public class DriveBase extends Subsystem {
 
     public void resetGyro(){
         ahrs.zeroYaw();
+        System.out.println("Reset Gyro");
     }
 
     public void drive(double left, double right) {
