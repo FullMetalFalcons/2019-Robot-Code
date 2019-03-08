@@ -134,18 +134,22 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
 
         driveBase.drive(oi.playstayController.getY(Hand.kLeft) / -1.1, oi.playstayController.getY(Hand.kRight) / -1.1 );
-        if (oi.playstayController.getBumper(Hand.kLeft)) {
-            driveBase.drive(oi.playstayController.getY(Hand.kLeft) / -1, oi.playstayController.getY(Hand.kRight) / -1 );
+        if (oi.playstayController.getBumper(Hand.kRight)) {
+            //driveBase.drive(oi.playstayController.getY(Hand.kLeft) / -1, oi.playstayController.getY(Hand.kRight) / -1 );
+            climber.frontDown(); 
         }
-        if (oi.playstayController.getBumper(Hand.kRight)){
-            driveBase.drive(oi.playstayController.getY(Hand.kLeft) / -1.5, oi.playstayController.getY(Hand.kRight) / -1.5 );
+        else
+        {
+            climber.frontStop(); 
+        }
+        if (oi.playstayController.getBumper(Hand.kLeft)){
+            //driveBase.drive(oi.playstayController.getY(Hand.kLeft) / -1.5, oi.playstayController.getY(Hand.kRight) / -1.5 );
+            climber.rearDown();
+        } else {
+            climber.rearStop();
         }
 
-        if (oi.playstayController.getXButton()) { 
-            isTurning = true;
-            TurnToAngle t = new TurnToAngle(45);
-            t.start();
-         }
+        
 
 
         if (oi.xbox.getY(Hand.kRight) >= 0.2)   { intake.up(); }
@@ -153,14 +157,16 @@ public class Robot extends TimedRobot {
         if (oi.xbox.getX(Hand.kRight) <= -0.2)  { intake.wristUp(); }
         if (oi.xbox.getX(Hand.kRight) >= 0.2)   { intake.wristDown(); }
         if (oi.xbox.getBumper(Hand.kLeft))      { intake.intakeOut(); }
-        if (oi.xbox.getBButton())               { intake.intakeOut(); }
+        
         if (oi.xbox.getBumper(Hand.kRight))     { intake.intakeIn();}
-
+        if (oi.xbox.getBButton())               { intake.pickupOut(); }
+        
+        if (oi.xbox.getBackButton())            { intake.pickupIn(); }
         if (oi.xbox.getAButtonPressed())        { climber.driveForward(-0.45);}
         if (oi.xbox.getAButtonReleased())       { climber.stop(); }
         if (oi.xbox.getStickButton(Hand.kRight)){ climber.frontUp(); }
         if (oi.xbox.getStickButton(Hand.kLeft)) { climber.frontDown(); }
-        if (oi.xbox.getBackButton())            { climber.frontDown(); }
+
         if  (!oi.xbox.getBackButton() && !oi.xbox.getStickButton(Hand.kRight) && !oi.xbox.getStickButton(Hand.kLeft)) {            
             climber.frontStop();
         }
@@ -170,12 +176,17 @@ public class Robot extends TimedRobot {
             climber.rearStop();
         }
         
+ 
         // if (oi.xbox.getStickButton(Hand.kRight)){
         //    //ClimberWithStablizer climb = new ClimberWithStablizer();
         //    //climb.start(); 
         // }   
-        
-        if (oi.xbox.getXButton()){
+        // if (oi.playstayController.getXButton()) { 
+        //     isTurning = true;
+        //     TurnToAngle t = new TurnToAngle(45);
+        //     t.start();
+        //  }
+        if (oi.playstayController.getXButton()){
             //intake.intakeIn();
             ClimberWithStablizer climb = new ClimberWithStablizer();
             climb.start(); 

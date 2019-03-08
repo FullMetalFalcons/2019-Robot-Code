@@ -107,8 +107,9 @@ public class TurnToAngle extends Command {
 			}
 		}
 		Robot.driveBase.drive(speed, -speed);
+		double angle = Robot.driveBase.getGyro();
 
-		if (Robot.driveBase.getGyro() < 2 + direction && Robot.driveBase.getGyro() > direction - 2) {
+		if ( angle< 2 + direction && angle > direction - 2) {
 			n++;
 			i++;
 		} else {

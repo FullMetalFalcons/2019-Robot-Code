@@ -21,11 +21,13 @@ public class Intake extends Subsystem {
   DoubleSolenoid lift;
   DoubleSolenoid wrist;
   DoubleSolenoid shoot;
+  DoubleSolenoid pickup;
 
   public Intake(){
     lift = new DoubleSolenoid(11, 0, 1);
     wrist = new DoubleSolenoid(11, 5, 4);
     shoot = new DoubleSolenoid(11, 6, 7);
+    pickup = new DoubleSolenoid(12 , 2, 3);
   }
 
   public void down(){
@@ -52,6 +54,13 @@ public class Intake extends Subsystem {
     shoot.set(Value.kForward);
   }
 
+  public void pickupOut() {
+    pickup.set(Value.kForward);
+  }
+
+  public void pickupIn() {
+    pickup.set(Value.kReverse);
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
