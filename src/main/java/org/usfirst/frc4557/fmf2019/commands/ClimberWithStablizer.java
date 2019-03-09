@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimberWithStablizer extends Command {
   private double warmuptime = 10000;
   private double commandtimeout = 60000;
-  private boolean isDone = false;
+  public boolean isDone = false;
 
   private double startTime;
   private boolean isStarted = false;
@@ -47,31 +47,43 @@ public class ClimberWithStablizer extends Command {
     double currentMilli = System.currentTimeMillis();
   
     // Wait for x ms before stablizing
-    if (currentMilli - startTime < warmuptime)
-    {
-      return;
-    } 
-    if (currentMilli - startTime > commandtimeout)
-    {
-      isDone = true;
-      return;
-    }
+    // if (currentMilli - startTime < warmuptime)
+    // {
+    //   return;
+    // } 
+    // if (currentMilli - startTime > commandtimeout)
+    // {
+    //   isDone = true;
+    //   return;
+    // }
+    
+    
+
     float roll = Robot.driveBase.getRoll();
 
     System.out.println("Roll=>" + roll);
-    if (roll > 1.5) {
+    if (roll > 0.2) {
       //front is too fast -- slow front down
       Robot.climber.frontStop();
-    } else if(roll < -1.5) {
+    } else {
+      Robot.climber.frontDown();
+    }
+    if(roll < -0.2) {
       Robot.climber.rearStop();
       // rear is too fast -- slow rear down
     } else {
-      Robot.climber.frontDown();  
       Robot.climber.rearDown();
     }
     System.out.println("Elapsed:" + (currentMilli - startTime) + " --- Ultrasound:" + currentHeight);
-    //isDone = (previousHeight == currentHeight); 
-    previousHeight = currentHeight;
+    try {
+      Thread.sleep(50);
+    } catch (Exception e) {
+      //TODO: handle exception
+    }
+  
+    Robot.climber.frontStop();
+    Robot.climber.rearStop();
+  
   }
 
   // Make this return true when this Command no longer needs to run execute()
