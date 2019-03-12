@@ -106,7 +106,7 @@ public class Climber extends Subsystem {
   }
 
   public double getPressure(){
-    return 150 * pressureSensor.getVoltage() / 4.0 - 25.0;
+    return 200 * pressureSensor.getVoltage() / 4.0 - 25.0;
   }
 
   @Override

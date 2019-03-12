@@ -197,7 +197,6 @@ public class Robot extends TimedRobot {
         
  
           if (oi.playstayController.getXButton()){
-             System.out.println("X Button");
              autoclimber.start(); 
           } else {
            
