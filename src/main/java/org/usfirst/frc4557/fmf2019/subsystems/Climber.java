@@ -106,7 +106,8 @@ public class Climber extends Subsystem {
   }
 
   public double getPressure(){
-    return 200 * pressureSensor.getVoltage() / 4.0 - 25.0;
+    // Output: 0.5V–4.5V linear voltage output. 0 psi outputs 0.5V, 100 psi outputs 2.5V, 200 psi outputs 4.5V
+    return 200 * (pressureSensor.getVoltage() - 0.5) / 4.0;
   }
 
   @Override
