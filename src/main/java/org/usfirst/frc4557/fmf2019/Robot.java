@@ -129,7 +129,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        Periodic();
+        //Scheduler.getInstance().run();
     }
 
     @Override
@@ -147,13 +148,20 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
 
-        driveBase.drive(oi.playstayController.getY(Hand.kLeft) / -1.1, oi.playstayController.getY(Hand.kRight) / -1.1 );
+        Periodic();
+    }
+
+    private void Periodic() {
         //Slow Down the robot when pressed - L2
-        if (oi.playstayController.getRawButton(7))
+        if (oi.playstayController.getRawButton(8))
         {
             
-            driveBase.drive(oi.playstayController.getY(Hand.kLeft) * lowFactor,
-                oi.playstayController.getY(Hand.kRight) * lowFactor);
+            driveBase.drive(oi.playstayController.getY(Hand.kLeft) * -1 * lowFactor,
+                oi.playstayController.getY(Hand.kRight) * -1 * lowFactor);
+         } else {
+            driveBase.drive(oi.playstayController.getY(Hand.kLeft) * -1, 
+            oi.playstayController.getY(Hand.kRight) * -1);
+        
          }
         
         if (oi.playstayController.getBumper(Hand.kRight )) {   
@@ -188,10 +196,13 @@ public class Robot extends TimedRobot {
         
         
  
-        //  if (oi.playstayController.getXButton()){
-        //     System.out.println("X Button");
-        //     autoclimber.start(); 
-        //  }
+          if (oi.playstayController.getXButton()){
+             System.out.println("X Button");
+             autoclimber.start(); 
+          } else {
+           
+            autoclimber.isDone = true;
+          }
 
         //  if (oi.playstayController.getAButton()){
         //      System.out.println("A Button");
