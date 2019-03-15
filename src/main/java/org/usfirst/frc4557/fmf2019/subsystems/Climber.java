@@ -22,8 +22,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  * Add your docs here.
  */
 
-
-
 public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
@@ -117,7 +115,7 @@ public class Climber extends Subsystem {
   }
 
   public void periodic()  {
-    //System.out.println(frontultrasonic.getVoltage());
+
     SmartDashboard.putNumber("front height", this.getFrontChasisHeight());
     SmartDashboard.putNumber("rear height", this.getRearChasisHeight());
     SmartDashboard.putNumber("Pressure", this.getPressure());
