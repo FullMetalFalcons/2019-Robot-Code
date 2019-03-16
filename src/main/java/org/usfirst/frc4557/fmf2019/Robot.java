@@ -220,7 +220,7 @@ public class Robot extends TimedRobot {
 
         if (oi.playstayController.getXButton()) {
             //autoclimber.start();
-            TurnToAnglePID  turnCmd = new TurnToAnglePID(90);
+            TurnToAnglePID  turnCmd = new TurnToAnglePID(-45);
             turnCmd.start();
         } else {
 
