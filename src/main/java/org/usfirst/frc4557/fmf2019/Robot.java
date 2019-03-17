@@ -219,9 +219,9 @@ public class Robot extends TimedRobot {
         // if (oi.xbox.getStartButton()) { climber.rearDown(); }
 
         if (oi.playstayController.getXButton()) {
-            //autoclimber.start();
-            TurnToAnglePID  turnCmd = new TurnToAnglePID(-45);
-            turnCmd.start();
+            autoclimber.start();
+            //TurnToAnglePID  turnCmd = new TurnToAnglePID(-45);
+            //turnCmd.start();
         } else {
 
             autoclimber.isDone = true;
