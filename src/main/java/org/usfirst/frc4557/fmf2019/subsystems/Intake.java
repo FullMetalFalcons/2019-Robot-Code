@@ -26,8 +26,8 @@ public class Intake extends Subsystem {
   public Intake(){
     lift = new DoubleSolenoid(11, 0, 1);
     wrist = new DoubleSolenoid(11, 5, 4);
-    shoot = new DoubleSolenoid(11, 6, 7);
-    pickup = new DoubleSolenoid(12 , 2, 3);
+    shoot = new DoubleSolenoid(11, 7, 6);
+    pickup = new DoubleSolenoid(12 , 3, 2);
   }
 
   public void down(){

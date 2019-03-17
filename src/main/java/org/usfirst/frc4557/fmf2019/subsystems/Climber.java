@@ -44,7 +44,7 @@ public class Climber extends Subsystem {
 
     frontValve = new DoubleSolenoid(12, 1, 0);
     //rearValve  = new DoubleSolenoid(12, 6, 7);
-    rearValve = new DoubleSolenoid(11,3, 2);
+    rearValve = new DoubleSolenoid(11,2, 3);
 
     leftMotor = new WPI_TalonSRX(12);
     rightMotor = new WPI_TalonSRX(1);
