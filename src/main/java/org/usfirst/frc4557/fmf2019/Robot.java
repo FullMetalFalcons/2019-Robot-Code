@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
     private int OPS_BUTTON_CLIMBER_DRIVE;
     private int OPS_BUTTON_CLIMBER_FRONTPISTON_UP;
     private int OPS_BUTTON_CLIMBER_REAR_UP;
-
+    private TurnToAnglePID t;
     private int DRIVER_BUTTON_SLOW;
     /**
      * This function is run when the robot is first started up and should be used
@@ -96,11 +96,11 @@ public class Robot extends TimedRobot {
         CLIMBER_DRIVE_SPEED = prefs.getDouble("ClimberDriveSpeed", 0.45) * -1;
         diagnosticMode = prefs.getBoolean("DiagnosticMode", false);
 
-        OPS_BUTTON_INTAKE = prefs.getInt("OpsButtonIntake", 0); 
-        OPS_BUTTON_PICKUP = prefs.getInt("OpsButtonPickup", 1); 
-        OPS_BUTTON_CLIMBER_DRIVE = prefs.getInt("OpsButtonClimberDrive", 2) ;
-        OPS_BUTTON_CLIMBER_FRONTPISTON_UP = prefs.getInt("OpsButtonClimberFrontUp", 3); 
-        OPS_BUTTON_CLIMBER_REAR_UP = prefs.getInt("OpsButtonlimberRearUp", 4); 
+        OPS_BUTTON_INTAKE = prefs.getInt("OpsButtonIntake", 6); 
+        OPS_BUTTON_PICKUP = prefs.getInt("OpsButtonPickup", 5); 
+        OPS_BUTTON_CLIMBER_DRIVE = prefs.getInt("OpsButtonClimberDrive", 3) ;
+        OPS_BUTTON_CLIMBER_FRONTPISTON_UP = prefs.getInt("OpsButtonClimberFrontUp", 4); 
+        OPS_BUTTON_CLIMBER_REAR_UP = prefs.getInt("OpsButtonlimberRearUp", 2); 
 
 
         DRIVER_BUTTON_SLOW = prefs.getInt("DriverButtonSlow", 8);
@@ -181,6 +181,28 @@ public class Robot extends TimedRobot {
             driveBase.drive(leftYstick * -1, rightYstick * -1);
         }
 
+        if (oi.playstayController.getRawButtonPressed(2)) {
+            driveBase.drive(0.5,0.5);
+        
+        } 
+        
+        if (oi.playstayController.getRawButtonReleased(2)) {
+            driveBase.drive(0,0);
+        }
+
+        if (oi.playstayController.getRawButton(7)) {
+            isTurning = true;
+            t = new TurnToAnglePID(-90);
+            t.start();
+        }
+
+        if (oi.playstayController.getRawButton(8)) {
+            isTurning = true;
+            t = new TurnToAnglePID(90);
+            t.start();
+
+        }
+
         if (oi.playstayController.getBumper(Hand.kRight)) {
             climber.frontDown();
         } else {
@@ -198,14 +220,16 @@ public class Robot extends TimedRobot {
         if (oi.xbox.getY(Hand.kRight) <= -0.2) {
             intake.down();
         }
-        if (oi.xbox.getY(Hand.kLeft) <= -0.2) {
-            intake.wristUp();
+        System.out.println("Left Value " + oi.xbox.getY(Hand.kLeft));
+        if (!(oi.xbox.getY(Hand.kLeft) > -0.2 && oi.xbox.getY(Hand.kLeft) < 0.2)) {
+            if (oi.xbox.getY(Hand.kLeft) <= -0.2) {
+                intake.wristUp();
+            }
+            if (oi.xbox.getY(Hand.kLeft) >= 0.2) {
+                intake.wristDown();
+            }
         }
-        if (oi.xbox.getY(Hand.kLeft) >= 0.2) {
-            intake.wristDown();
-        }
-
-        onXboxController();
+        onXboxControllerRemap();
 
         if (oi.playstayController.getXButton()) {
             autoclimber.start();
@@ -258,8 +282,8 @@ public class Robot extends TimedRobot {
 
     private void onXboxControllerRemap() {
 
-        if (oi.xbox.getRawButtonPressed(OPS_BUTTON_INTAKE)) intake.intakeIn(); 
-        if (oi.xbox.getRawButtonReleased(OPS_BUTTON_INTAKE)) intake.intakeOut();
+        if (oi.xbox.getRawButtonReleased(OPS_BUTTON_INTAKE)) intake.intakeOut(); 
+        if (oi.xbox.getRawButtonPressed(OPS_BUTTON_INTAKE)) intake.intakeIn();
         if (oi.xbox.getRawButtonPressed(OPS_BUTTON_PICKUP)) intake.pickupOut();
         if (oi.xbox.getRawButtonReleased(OPS_BUTTON_PICKUP)) intake.pickupIn();
         if (oi.xbox.getRawButtonPressed(OPS_BUTTON_CLIMBER_DRIVE)) climber.driveForward(CLIMBER_DRIVE_SPEED);
