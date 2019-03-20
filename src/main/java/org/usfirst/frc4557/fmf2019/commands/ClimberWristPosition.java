@@ -6,64 +6,35 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc4557.fmf2019.commands;
+
 import org.usfirst.frc4557.fmf2019.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ClimberUp extends Command {
-
-  private double previousHeight;
-  private boolean done;
-  private double startTime;
-
-  public ClimberUp() {
+public class ClimberWristPosition extends Command {
+  public ClimberWristPosition() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.climber);
+    requires(Robot.intake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    previousHeight = 0;
-    startTime = System.currentTimeMillis();
-    setTimeout(2);
-    done = false;
-    System.out.println("Command Initialize");
+    Robot.intake.wristUp();
+    Robot.intake.intakeOut();
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double currentHeight = Robot.climber.getFrontChasisHeight();
-    System.out.println(currentHeight + "---" + previousHeight);
     
-    
-    if (System.currentTimeMillis() - startTime > 10000)
-    {
-      System.out.println("CommandTimedOut******");
-      done=true;
-    }
-    if (previousHeight == 0)
-    {
-      Robot.climber.frontDown();
-      Robot.climber.rearDown();
-      previousHeight =currentHeight;
-    } else {
-      
-      if (currentHeight == previousHeight)
-      {
-        System.out.println("Reached------------------------");
-        done = true;
-      } else {
-        previousHeight = currentHeight;
-      }
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return done;
+    return true;
   }
 
   // Called once after isFinished returns true

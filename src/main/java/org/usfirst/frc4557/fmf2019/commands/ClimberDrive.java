@@ -15,7 +15,6 @@ public class ClimberDrive extends Command {
   
   private double currentHeight;
   private boolean done;
-  private double startTime;
   private Climber.PistonPosition target;
 
   static final int WAITTIME = 100;
@@ -29,33 +28,22 @@ public class ClimberDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    setTimeout(15);
-    done= false;
-    startTime = 0;
-    currentHeight = getChasisHeight();
-    Robot.climber.driveForward(0.1);
+    setTimeout(10);
+    done= false;   
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (getChasisHeight() < 30) {
-        Robot.climber.stop();
-        done = true;
-     } else {
       // Continue to drive since the front wheel has not clear the platform
       Robot.climber.driveForward(0.1);
-    }
+    
   }
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-
-    if ( System.currentTimeMillis() - startTime > WAITTIME) {
-      System.out.println("Climber Drive ended with timeout");
-      return true;
-    }
-    return done;
+    
+    return done || isTimedOut() || getChasisHeight() < 30;
   }
   // Called once after isFinished returns true
   @Override

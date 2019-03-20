@@ -22,6 +22,7 @@ public class ClimbRoutine extends CommandGroup {
     addSequential(new ClimberWithStablizer());
     addSequential(new ClimberDrive(Climber.PistonPosition.FRONT));
     addSequential(new ClimberRetractPiston(Climber.PistonPosition.FRONT, 5000));
+    addSequential(new ClimberWristPosition());    
     addSequential(new ClimberDrive(Climber.PistonPosition.REAR));
     addSequential(new ClimberRetractPiston(Climber.PistonPosition.REAR, 5000));
     //addSequential(new ClimberFinale());

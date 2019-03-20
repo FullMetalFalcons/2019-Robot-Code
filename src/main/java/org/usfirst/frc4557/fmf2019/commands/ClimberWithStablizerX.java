@@ -12,17 +12,13 @@ import java.lang.Thread;
 import org.usfirst.frc4557.fmf2019.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ClimberWithStablizer extends Command {
-  private double warmuptime = 10000;
-  private double commandtimeout = 60000;
-  public boolean isDone = false;
+public class ClimberWithStablizerX extends Command {
 
-  private double startTime;
+  public boolean isDone = false;
   private boolean isStarted = false;
   private double previousHeight = 0;
-  private int ct = 0;
 
-  public ClimberWithStablizer() {
+  public ClimberWithStablizerX() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveBase);
@@ -33,12 +29,11 @@ public class ClimberWithStablizer extends Command {
   @Override
   protected void initialize() {
     isStarted = false;
-    startTime = System.currentTimeMillis();
+    setTimeout(12);
     isDone = false;
     // Start the climb
     Robot.climber.frontDown();
     Robot.climber.rearDown();
-    ct = 0;
 
   }
 
@@ -46,59 +41,40 @@ public class ClimberWithStablizer extends Command {
   @Override
   protected void execute() {
 
-    
-    double currentMilli = System.currentTimeMillis();
-
-    Robot.climber.frontStop();
-    Robot.climber.rearStop();
-
     float roll = Robot.driveBase.getRoll();
-    
 
-    if (roll < 0.2 && roll > -0.2)
-    {
+    // if robot is balance, continue climb
+    if (roll < 0.2 && roll > -0.2) {
       Robot.climber.frontDown();
       Robot.climber.rearDown();
-    } 
-    else {
-     if (roll > 0.2) {
-       //front is too fast -- slow front down
-       //Robot.climber.frontStop();
-       Robot.climber.rearDown();
-     }
-     if(roll < -0.2) {
-       // rear is too fast -- slow rear down
-       Robot.climber.frontDown();
-     }
+    } else {
+      if (roll > 0.2) {
+        // front is too fast -- slow front down
+        Robot.climber.frontStop();
+        Robot.climber.rearDown();
+      }
+      if (roll < -0.2) {
+        Robot.climber.rearStop();
+        Robot.climber.frontDown();
+        // rear is too fast -- slow rear down
+      }
 
     }
-    try {
-      Thread.sleep(50);
-    } catch (Exception e) {
-      // TODO: handle exception
-    }
-
-    Robot.climber.frontStop();
-    Robot.climber.rearStop();
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    
     if (isDone) {
       return true;
     }
     double currentHeight = Robot.climber.getFrontChasisHeight();
-    if (currentHeight != previousHeight)
-    {
+    if (currentHeight != previousHeight) {
       previousHeight = currentHeight;
       return false;
     } else {
       return true;
     }
-    
   }
 
   // Called once after isFinished returns true
