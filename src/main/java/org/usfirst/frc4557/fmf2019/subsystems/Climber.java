@@ -78,7 +78,7 @@ public class Climber extends Subsystem {
   }
   
   public void driveForward(double speed){
-    leftMotor.set(speed);
+    leftMotor.set(speed*1.1);
     rightMotor.set(-speed);
   }
 

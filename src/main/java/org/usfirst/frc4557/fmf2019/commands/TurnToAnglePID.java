@@ -20,7 +20,7 @@ public class TurnToAnglePID extends Command implements PIDOutput {
 
   PIDController turnController;
 
-  static final double kP = 0.0025;
+  static final double kP = 0.0018;
   static final double kI = 0.001;
   static final double kD = 0.00;
   static final double kF = 0.00;
@@ -32,17 +32,25 @@ public class TurnToAnglePID extends Command implements PIDOutput {
     // eg. requires(chassis);
     requires(Robot.driveBase);
     target = targetAngle;
-    
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.driveBase.resetGyro();
+
+    try {
+      Thread.sleep(10);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+   
     turnController = new PIDController(kP, kI, kD, kF, Robot.driveBase.ahrs, this);
     turnController.setSetpoint(target);
     turnController.setInputRange(-180.0f, 180.0f);
-    turnController.setOutputRange(-0.45, 0.45);
+    turnController.setOutputRange(-0.25, 0.25);
     turnController.setAbsoluteTolerance(1.0f);
     turnController.setContinuous(true);
     turnController.enable();

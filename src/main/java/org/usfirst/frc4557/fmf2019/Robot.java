@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
 
 
         DRIVER_BUTTON_SLOW = prefs.getInt("DriverButtonSlow", 8);
-
+driveBase.setBrakeMode();
         autoclimber = new ClimberWithStablizer();
         // climber.rearUp();
         // climber.frontUp();
@@ -175,30 +175,31 @@ public class Robot extends TimedRobot {
         if (Math.abs(rightYstick) < 0.10)
             rightYstick = 0;
 
-        if (oi.playstayController.getRawButton(DRIVER_BUTTON_SLOW)) {
-            driveBase.drive(leftYstick * -1 * DRIVE_SLOW_FACTOR, rightYstick * -1 * DRIVE_SLOW_FACTOR);
-        } else {
-            driveBase.drive(leftYstick * -1, rightYstick * -1);
-        }
+        
 
-        if (oi.playstayController.getRawButtonPressed(2)) {
-            driveBase.drive(0.5,0.5);
+        if (oi.playstayController.getRawButton(2)) {
+            System.out.println("Drive Straight");
+            driveBase.drive(0.6,0.6);
         
-        } 
-        
-        if (oi.playstayController.getRawButtonReleased(2)) {
-            driveBase.drive(0,0);
+        }  else {
+            System.out.println("Drive");
+            if (oi.playstayController.getRawButton(DRIVER_BUTTON_SLOW)) {
+                driveBase.drive(leftYstick * -1 * DRIVE_SLOW_FACTOR, rightYstick * -1 * DRIVE_SLOW_FACTOR);
+            } else {
+                driveBase.drive(leftYstick * -1, rightYstick * -1);
+            }
         }
+        
 
         if (oi.playstayController.getRawButton(7)) {
             isTurning = true;
-            t = new TurnToAnglePID(-90);
+            t = new TurnToAnglePID(-75);
             t.start();
         }
 
         if (oi.playstayController.getRawButton(8)) {
             isTurning = true;
-            t = new TurnToAnglePID(90);
+            t = new TurnToAnglePID(75);
             t.start();
 
         }
@@ -220,7 +221,6 @@ public class Robot extends TimedRobot {
         if (oi.xbox.getY(Hand.kRight) <= -0.2) {
             intake.down();
         }
-        System.out.println("Left Value " + oi.xbox.getY(Hand.kLeft));
         if (!(oi.xbox.getY(Hand.kLeft) > -0.2 && oi.xbox.getY(Hand.kLeft) < 0.2)) {
             if (oi.xbox.getY(Hand.kLeft) <= -0.2) {
                 intake.wristUp();
@@ -288,7 +288,7 @@ public class Robot extends TimedRobot {
         if (oi.xbox.getRawButtonReleased(OPS_BUTTON_PICKUP)) intake.pickupIn();
         if (oi.xbox.getRawButtonPressed(OPS_BUTTON_CLIMBER_DRIVE)) climber.driveForward(CLIMBER_DRIVE_SPEED);
         if (oi.xbox.getRawButtonReleased(OPS_BUTTON_CLIMBER_DRIVE)) climber.stop();
-        if (oi.xbox.getRawButtonPressed(OPS_BUTTON_CLIMBER_FRONTPISTON_UP)) climber.frontUp();
-        if (oi.xbox.getRawButtonPressed(OPS_BUTTON_CLIMBER_REAR_UP)) climber.rearUp();
+        if (oi.xbox.getRawButton(OPS_BUTTON_CLIMBER_FRONTPISTON_UP)) climber.frontUp();
+        if (oi.xbox.getRawButton(OPS_BUTTON_CLIMBER_REAR_UP)) climber.rearUp();
     }
 }

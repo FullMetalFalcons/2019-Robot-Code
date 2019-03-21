@@ -70,10 +70,17 @@ public class DriveBase extends Subsystem {
         rightFrontTalonSRX = new WPI_TalonSRX(2);
         rightRearTalonSRX = new WPI_TalonSRX(3);
 
-        rightFrontTalonSRX.configFactoryDefault();
-        leftFrontTalonSRX.configFactoryDefault();
+        leftSpeedController = new SpeedControllerGroup(leftFrontTalonSRX, leftRearTalonSRX);
+        addChild("LeftSpeedController",leftSpeedController);
+        rightSpeedController = new SpeedControllerGroup(rightFrontTalonSRX, rightRearTalonSRX);
+        addChild("RightSpeedController",rightSpeedController);
 
-        diffDrive = new DifferentialDrive(leftFrontTalonSRX, rightFrontTalonSRX);
+
+        //rightFrontTalonSRX.configFactoryDefault();
+        //leftFrontTalonSRX.configFactoryDefault();
+        //SpeedControllerGroup left = new SpeedControllerGroup(speedController, speedControllers)
+//        diffDrive = new DifferentialDrive(leftFrontTalonSRX, rightFrontTalonSRX);
+        diffDrive = new DifferentialDrive(leftSpeedController, rightSpeedController);  
         addChild("DiffDrive", diffDrive);
 
         leftRearTalonSRX.follow(leftFrontTalonSRX);
